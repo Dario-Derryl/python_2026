@@ -1,0 +1,67 @@
+from mstrio.connection import Connection
+from mstrio.distribution_services import (
+    BackupPrinterProperties,
+    ConnectionParameters,
+    Device,
+    DeviceType,
+    EmailDeviceProperties,
+    EmailFormat,
+    EmailSmartHostSettings,
+    FileDeviceProperties,
+    FileLocation,
+    FileProperties,
+    FileSystem,
+    IOSDeviceProperties,
+    list_devices,
+    list_transmitters,
+    PrinterDeviceProperties,
+    PrinterLocation,
+    PrinterProperties,
+    PrinterPdfSettings,
+    Transmitter,
+    UnixWindowsSharity
+)
+from mstrio.distribution_services.subscription.base_subscription import Subscription
+from mstrio.distribution_services.subscription.subscription_manager import list_subscriptions
+from mstrio.access_and_security import Privilege, PrivilegeMode
+from mstrio.users_and_groups import (
+    create_users_from_csv, list_user_groups, list_users, User, UserGroup
+)
+
+baseurl = "https://guess-eu-prod.cloud.microstrategy.com/MicroStrategyLibrarySTD/api"
+mstrusername = "dgluch"
+mstrpassword = "MSTR"
+projectid = "82E31B05984A3D333DD960BEBAC18B46" #RDW project 
+
+conn = Connection(baseurl, mstrusername, mstrpassword, projectid, login_mode=1)
+
+TRANSMITTER_ID = "F0EF0719494D1094053CDDA7ECC63C67"
+
+DEVICE_ID = "032824714486EC8F358AA9B2C8E42915"
+
+SUBSCRIPTION_ID = "7215193C5A47144EE5BB3FA5D4522A73"
+
+USER_ID = "A39B19D540D1F9EB8DC9CCA499D0D7A8" #PB_5044170F4C268D1A5F8DD287EB46FA3A
+
+list_of_transmitters = list_transmitters(conn)
+list_of_devices = list_devices(conn)
+
+transmitter = Transmitter(conn, id=TRANSMITTER_ID)
+transmitter_properties = transmitter.list_properties()
+
+device = Device(conn, id=DEVICE_ID)
+device_properties = device.list_properties()
+
+sub = Subscription(connection=conn, id=SUBSCRIPTION_ID, project_id="82E31B05984A3D333DD960BEBAC18B46")
+sub_properties = sub.list_properties()
+
+user_darek = User(conn, id=USER_ID)
+adress = user_darek.addresses
+
+#print(transmitter)
+#print(transmitter_properties)
+#print(list_of_transmitters)
+print(list_of_devices)
+#print(device_properties)
+#print(sub_properties)
+#print(adress)
